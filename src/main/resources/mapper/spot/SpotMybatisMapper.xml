@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.melly.demosbsj.recommend.SpotMybatisMapper">
+    <!-- mapper namespace="@Mapper 로 선언된 클래스의 풀패키지.클래스 이름"-->
+    <!-- Create -->
+    <insert id="insertSpot" parameterType="SpotDto">
+        INSERT INTO spots (
+            spot_name, category, address, zipcode, latitude, longitude, image_url, tel,
+            website_url, operating_hours, entrance_fee, rating, review_count, content_id,
+            content_type_id, region
+        ) VALUES (
+                     #{spotName}, #{category}, #{address}, #{zipcode}, #{latitude}, #{longitude},
+                     #{imageUrl}, #{tel}, #{websiteUrl}, #{operatingHours}, #{entranceFee},
+                     #{rating}, #{reviewCount}, #{contentId}, #{contentTypeId}, #{region.region}
+                 );
+    </insert>
+
+    <!-- Read -->
+    <select id="findSpotById" parameterType="Long" resultType="SpotDto">
+        SELECT *
+        FROM spots
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAllSpots" resultType="SpotDto">
+        SELECT *
+        FROM spots
+    </select>
+
+    <!-- Update -->
+    <update id="updateSpot" parameterType="SpotDto">
+        UPDATE spots
+        SET
+            spot_name = #{spotName},
+            category = #{category},
+            address = #{address},
+            zipcode = #{zipcode},
+            latitude = #{latitude},
+            longitude = #{longitude},
+            image_url = #{imageUrl},
+            tel = #{tel},
+            website_url = #{websiteUrl},
+            operating_hours = #{operatingHours},
+            entrance_fee = #{entranceFee},
+            rating = #{rating},
+            review_count = #{reviewCount},
+            content_id = #{contentId},
+            content_type_id = #{contentTypeId},
+            region = #{region.region}
+        WHERE id = #{id}
+    </update>
+
+    <!-- Delete -->
+    <delete id="deleteSpotById">
+        DELETE FROM spots
+        WHERE id = #{id}
+    </delete>
+
+    <!-- Count by name -->
+    <select id="countAllByNameContains" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM spots
+        WHERE spot_name LIKE CONCAT('%', #{name}, '%')
+    </select>
+
+    <!-- Find all by name contains -->
+    <select id="findAllByNameContains" parameterType="String" resultType="SpotDto">
+        SELECT *
+        FROM spots
+        WHERE spot_name LIKE CONCAT('%', #{name}, '%')
+    </select>
+
+</mapper>
