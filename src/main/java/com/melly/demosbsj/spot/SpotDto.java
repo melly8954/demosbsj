@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 
 public class SpotDto implements ISpot {
-    private Long Id;
+    private Long id;
     private String title;
     private String addr;
     private String tel;

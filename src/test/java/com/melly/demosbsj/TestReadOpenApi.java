@@ -1,26 +1,22 @@
-package com.melly.demosbsj.area;
+package com.melly.demosbsj;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-@Service
-public class ApiService {
+import static org.assertj.core.api.Assertions.assertThat;
 
-    @Autowired
-    private ObjectMapper objectMapper; // JSON 파싱을 위한 ObjectMapper
+@SpringBootTest
+public class TestReadOpenApi {
 
-    @Autowired
-    private AreaService areaService;
-
-    public ApiResponse fetchDataFromApi() throws Exception {
+    @Test
+    public void TestRead01() throws Exception {
         String url = "https://apis.data.go.kr/B551011/KorService1/areaCode1?numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=test&_type=json&serviceKey=ZK5%2FABP5iNBCAOoQYO1NPKX7ml5Iv4yQs5jo8bokCDw5RvV%2BwogquKHDfUj58azCWXGgn36NF9%2FqqYzoJI7ovA%3D%3D";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(url))
@@ -30,10 +26,7 @@ public class ApiService {
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
-        ApiResponse apiResponse = objectMapper.readValue(response.body(), ApiResponse.class);
-
-        // DTO를 사용해 데이터베이스에 저장
-        areaService.saveAreasFromApiResponse(apiResponse);
-        return apiResponse;
+        assertThat(response).isNotNull();
+        System.out.println(response.body().toString());
     }
 }

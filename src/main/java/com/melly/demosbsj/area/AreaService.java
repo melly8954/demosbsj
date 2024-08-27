@@ -23,7 +23,7 @@ public class AreaService implements IAreaService {
     }
 
     public void saveAreasFromApiResponse(ApiResponse apiResponse) {
-        for (ApiResponse.Item item : apiResponse.getBody().getItems().getItem()) {
+        for (ApiResponse.Item item : apiResponse.getResponse().getBody().getItems().getItem()) {
             // Item을 AreaDto로 변환
             AreaDto areaDto = AreaDto.builder()
                     .rnum(item.getRnum())

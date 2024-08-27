@@ -1,15 +1,8 @@
 package com.melly.demosbsj.area;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Getter
@@ -17,70 +10,59 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-@XmlRootElement(name = "response") // XML의 루트 요소
-@XmlAccessorType(XmlAccessType.FIELD)
+
 public class ApiResponse {
-    @XmlElement(name = "header")
-    private Header header;
+    @JsonProperty("response")
+    private Response response;
 
-    @XmlElement(name = "body")
-    private Body body;
+    @Data
+    public static class Response {
+        @JsonProperty("header")
+        private Header header;
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @XmlAccessorType(XmlAccessType.FIELD)
+        @JsonProperty("body")
+        private Body body;
+    }
+
+    @Data
     public static class Header {
-        @XmlElement(name = "resultCode")
+        @JsonProperty("resultCode")
         private String resultCode;
 
-        @XmlElement(name = "resultMsg")
+        @JsonProperty("resultMsg")
         private String resultMsg;
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @XmlAccessorType(XmlAccessType.FIELD)
+    @Data
     public static class Body {
-        @XmlElement(name = "items")
+        @JsonProperty("items")
         private Items items;
 
-        @XmlElement(name = "numOfRows")
+        @JsonProperty("numOfRows")
         private Integer numOfRows;
 
-        @XmlElement(name = "pageNo")
+        @JsonProperty("pageNo")
         private Integer pageNo;
 
-        @XmlElement(name = "totalCount")
+        @JsonProperty("totalCount")
         private Integer totalCount;
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @XmlAccessorType(XmlAccessType.FIELD)
+    @Data
     public static class Items {
-        @XmlElement(name = "item")
+        @JsonProperty("item")
         private List<Item> item; // List<Item>으로 변경
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @XmlAccessorType(XmlAccessType.FIELD)
+    @Data
     public static class Item {
-        @XmlElement(name = "rnum")
+        @JsonProperty("rnum")
         private Integer rnum;
 
-        @XmlElement(name = "code")
+        @JsonProperty("code")
         private Integer code;
 
-        @XmlElement(name = "name")
+        @JsonProperty("name")
         private String name;
     }
 }
