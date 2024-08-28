@@ -7,20 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.xml.bind.JAXBException;
-
 @RestController
 @RequestMapping("/api/areas")
 public class AreaController {
     @Autowired
-    private ApiService apiService;
+    private AreaApiService areaApiService;
 
 
     @GetMapping("/fetch")
     public ResponseEntity<?> fetchAreas() {
         try {
-            ApiResponse apiResponse = apiService.fetchDataFromApi();
-            return ResponseEntity.ok(apiResponse);
+            AreaApiResponse areaApiResponse = areaApiService.fetchDataFromApi();
+            return ResponseEntity.ok(areaApiResponse);
         } catch (Exception e) {
             // 예외 처리 로직 - 스택 트레이스를 로그에 기록
             e.printStackTrace(); // 로그에 출력

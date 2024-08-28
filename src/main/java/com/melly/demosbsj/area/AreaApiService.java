@@ -12,7 +12,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Service
-public class ApiService {
+public class AreaApiService {
 
     @Autowired
     private ObjectMapper objectMapper; // JSON 파싱을 위한 ObjectMapper
@@ -20,7 +20,7 @@ public class ApiService {
     @Autowired
     private AreaService areaService;
 
-    public ApiResponse fetchDataFromApi() throws Exception {
+    public AreaApiResponse fetchDataFromApi() throws Exception {
         String url = "https://apis.data.go.kr/B551011/KorService1/areaCode1?numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=test&_type=json&serviceKey=ZK5%2FABP5iNBCAOoQYO1NPKX7ml5Iv4yQs5jo8bokCDw5RvV%2BwogquKHDfUj58azCWXGgn36NF9%2FqqYzoJI7ovA%3D%3D";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(url))
@@ -30,10 +30,10 @@ public class ApiService {
                 .build()
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
-        ApiResponse apiResponse = objectMapper.readValue(response.body(), ApiResponse.class);
+        AreaApiResponse areaApiResponse = objectMapper.readValue(response.body(), AreaApiResponse.class);
 
         // DTO를 사용해 데이터베이스에 저장
-        areaService.saveAreasFromApiResponse(apiResponse);
-        return apiResponse;
+        areaService.saveAreasFromApiResponse(areaApiResponse);
+        return areaApiResponse;
     }
 }

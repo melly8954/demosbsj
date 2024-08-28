@@ -17,11 +17,12 @@ public class SpotDto implements ISpot {
     private String title;
     private String addr;
     private String tel;
-    private String zipCode;
+    private String zipcode;
     private String MapX;
     private String MapY;
-    private String firstImage;
-    private Integer AreaCodeId;
-    private Integer ContentTypeId;
+    private String firstimage;
+    private String contentId;
+    private Integer areaCodeId;
+    private Integer contentTypeId;
 
 }

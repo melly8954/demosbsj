@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ApiResponse {
+public class AreaApiResponse {
     @JsonProperty("response")
     private Response response;
 
@@ -56,11 +56,8 @@ public class ApiResponse {
 
     @Data
     public static class Item {
-        @JsonProperty("rnum")
-        private Integer rnum;
-
         @JsonProperty("code")
-        private Integer code;
+        private String code;
 
         @JsonProperty("name")
         private String name;

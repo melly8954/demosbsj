@@ -15,8 +15,7 @@ import lombok.experimental.SuperBuilder;
 
 public class AreaDto implements IArea {
 
-    private Integer rnum;
-    private Integer code;
+    private String code;
     private String name;
 
 }
