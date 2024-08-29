@@ -6,8 +6,8 @@
 <mapper namespace="com.melly.demosbsj.area.IAreaMybatisMapper">
 
     <insert id="insertArea" parameterType="AreaDto">
-        INSERT INTO area_code_tbl (code, name)
-        VALUES (#{code}, #{name})
+        INSERT INTO area_code_tbl (id, name)
+        VALUES (#{id}, #{name})
     </insert>
 
 </mapper>

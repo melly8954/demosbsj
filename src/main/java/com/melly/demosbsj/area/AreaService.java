@@ -13,14 +13,11 @@ public class AreaService implements IAreaService {
     @Override
     public void saveArea(IArea area) {
         areaMapper.insertArea((AreaDto) area);
+
     }
 
-    @Override
-    public void saveAreas(List<IArea> areas) {
-        for (IArea area : areas) {
-            saveArea(area);
-        }
-    }
+
+
 
     public void saveAreasFromApiResponse(AreaApiResponse areaApiResponse) {
         for (AreaApiResponse.Item item : areaApiResponse.getResponse().getBody().getItems().getItem()) {
@@ -29,6 +26,7 @@ public class AreaService implements IAreaService {
                     .code(item.getCode())
                     .name(item.getName())
                     .build();
+            areaDto.copyfield(areaDto);
             saveArea(areaDto);
         }
     }

@@ -4,5 +4,5 @@
 //
 //@Mapper
 //public interface IContentTypeMybatisMapper {
-//    void insert(ContentTypeDto contentType);
+//    String findById(ContentTypeDto contentType);
 //}
