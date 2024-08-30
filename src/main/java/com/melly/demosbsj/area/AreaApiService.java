@@ -3,6 +3,7 @@ package com.melly.demosbsj.area;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
@@ -20,8 +21,23 @@ public class AreaApiService {
     @Autowired
     private AreaService areaService;
 
+    @Value("${api.key}")
+    String serviceKey;
+
     public AreaApiResponse fetchDataFromApi() throws Exception {
-        String url = "https://apis.data.go.kr/B551011/KorService1/areaCode1?numOfRows=20&pageNo=1&MobileOS=ETC&MobileApp=test&_type=json&serviceKey=ZK5%2FABP5iNBCAOoQYO1NPKX7ml5Iv4yQs5jo8bokCDw5RvV%2BwogquKHDfUj58azCWXGgn36NF9%2FqqYzoJI7ovA%3D%3D";
+        // 변수 선언
+        String baseUrl = "https://apis.data.go.kr/B551011/KorService1/areaCode1";
+        int numOfRows = 20;
+        String mobileOS = "ETC";
+        String mobileApp = "test";
+        String responseType = "json";
+
+        // URL 구성
+        String url = String.format(
+                "%s?numOfRows=%d&MobileOS=%s&MobileApp=%s&_type=%s&serviceKey=%s",
+                baseUrl, numOfRows, mobileOS, mobileApp, responseType, serviceKey
+        );
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(url))
                 .GET()
@@ -34,6 +50,8 @@ public class AreaApiService {
 
         // DTO를 사용해 데이터베이스에 저장
         areaService.saveAreasFromApiResponse(areaApiResponse);
+
+        // api 응답
         return areaApiResponse;
     }
 }
