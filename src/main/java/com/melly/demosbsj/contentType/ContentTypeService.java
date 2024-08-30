@@ -12,15 +12,10 @@
 //
 //
 //    @Override
-//    public ContentTypeDto findContentType(IContentType contentType) {
-//        // ContentTypeDto를 사용하여 name 값을 가져옴
-//        String id = contentTypeMybatisMapper.findById((ContentTypeDto) contentType);
+//    public ContentTypeDto saveContentType(IContentType contentType) {
 //
-//        // 결과를 ContentTypeDto 객체에 설정
-//        ContentTypeDto result = new ContentTypeDto();
-//        result.setId(id); // id는 문자열로 설정됨
+//        return contentTypeMybatisMapper.findById(contentType.getId());
 //
-//        return result;
 //    }
 //
 //}

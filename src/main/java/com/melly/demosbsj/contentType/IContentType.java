@@ -2,8 +2,8 @@
 //
 //public interface IContentType {
 //
-//    String getId();
-//    void setId(String id);
+//    Long getId();
+//    void setId(Long id);
 //
 //    String getName();
 //    void setName(String name);

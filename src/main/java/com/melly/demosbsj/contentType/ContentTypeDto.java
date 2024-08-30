@@ -14,6 +14,6 @@
 //@AllArgsConstructor
 //
 //public class ContentTypeDto implements IContentType {
-//    private String id;
+//    private Long id;
 //    private String name;
 //}
