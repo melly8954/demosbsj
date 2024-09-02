@@ -3,6 +3,8 @@ package com.melly.demosbsj.spot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SpotService implements ISpotServicce{
 
@@ -14,6 +16,10 @@ public class SpotService implements ISpotServicce{
     @Override
     public void saveSpot(ISpot spot) {
         spotMybatisMapper.insertSpot((SpotDto) spot);
+    }
+
+    public List<SpotDto> getAllSpot() {
+        return spotMybatisMapper.findAll();
     }
 
     public void saveSpotDtoFromApiResponse(SpotApiResponse spotApiResponse){

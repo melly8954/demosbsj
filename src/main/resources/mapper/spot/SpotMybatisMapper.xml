@@ -10,4 +10,21 @@
         VALUES (#{title}, #{addr1}, #{tel}, #{zipCode}, #{mapX}, #{mapY}, #{firstImage}, #{areaCode}, #{contentTypeId})
     </insert>
 
+
+    <!-- 모든 SpotDto 객체를 가져오는 쿼리 -->
+    <select id="findAll" resultType="SpotDto">
+        SELECT
+        id,
+        title,
+        tel,
+        addr1,
+        zipcode,
+        mapX,
+        mapY,
+        firstimage,
+        areaCodeId,
+        contentTypeId
+        FROM
+        Spot_tbl
+    </select>
 </mapper>

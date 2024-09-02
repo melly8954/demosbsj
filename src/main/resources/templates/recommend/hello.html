@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Grid Example</title>
+    <style>
+        /* 스타일 정의 */
+        .photo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .photo-grid div {
+            width: 150px;
+            height: 100px;
+            background-color: #E1E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .photo-grid div:hover {
+            background-color: #B0C4DE;
+        }
+    </style>
+</head>
+<body>
+<div class="photo-grid">
+    <div>Photo 1</div>
+    <div>Photo 2</div>
+    <div>Photo 3</div>
+    <div>Photo 4</div>
+</div>
+</body>
+</html>
