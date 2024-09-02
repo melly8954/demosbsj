@@ -2,12 +2,15 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>{{title}}</title>
-    <style>
+    <title>지역별 장소 추천 메인페이지</title>
+    <<style>
         /* 스타일 정의 */
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
+
         .sidebar {
             width: 200px;
             background-color: #8ca5ce;
@@ -16,30 +19,38 @@
             bottom: 0;
             padding: 20px;
         }
+
         .sidebar a {
             display: block;
             margin: 20px 0;
             color: white;
             text-decoration: none;
         }
+
         .content {
             margin-left: 220px;
             padding: 20px;
         }
+
+        /* .preview-title의 마진을 증가시켜 .photo-grid와 겹치지 않도록 조정 */
         .preview-title {
             font-size: 24px;
             color: #357ABD;
-            margin-bottom: 20px;
+            margin-bottom: 40px; /* 간격을 충분히 주어야 함 */
             cursor: pointer;
         }
+
         .photo-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 20px; /* 간격을 넓게 설정 */
+            margin-bottom: 80px; /* 내비게이션 버튼의 위치를 위한 여백 */
         }
+
         .photo-grid div {
-            width: 150px;
-            height: 100px;
+            width: 100%; /* 사진을 컨테이너에 맞게 조정 */
+            max-width: 600px; /* 최대 너비 설정 */
+            height: 200px;
             background-color: #E1E8F0;
             display: flex;
             align-items: center;
@@ -47,9 +58,11 @@
             border-radius: 10px;
             cursor: pointer;
         }
+
         .photo-grid div:hover {
             background-color: #B0C4DE;
         }
+
         .move-button {
             position: fixed;
             bottom: 20px;
@@ -60,6 +73,33 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+        }
+
+        /* 내비게이션 버튼 스타일 */
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            bottom: 20px;
+            left: 220px;
+            right: 0;
+            background-color: white; /* 배경색을 추가하여 버튼을 더 눈에 띄게 */
+            padding: 10px;
+        }
+
+        .navigation-buttons button {
+            background-color: transparent; /* 배경색 제거 */
+            color: #FF6347; /* 화살표 색상 */
+            font-size: 30px; /* 화살표 크기 */
+            padding: 0; /* 내부 여백 제거 */
+            border: none; /* 테두리 제거 */
+            cursor: pointer;
+            margin: 0 10px;
+        }
+
+        .navigation-buttons button:hover {
+            color: #FF4500; /* 호버 상태에서 화살표 색상 */
         }
     </style>
 </head>
@@ -74,17 +114,73 @@
 
 <div class="content">
     <div id="site-title">사이트 이름</div>
-    <div class="preview-title" id="previewTitle">{{title}}</div>
+    <div class="preview-title" id="previewTitle">지역별 장소 추천 메인페이지</div>
 
-    <div class="photo-grid">
-        {{#photos}}
-        <div class="photo-item" data-id="{{id}}">
-            <img src="{{url}}" alt="사진 {{id}}" style="width: 100%; height: auto; border-radius: 10px;">
-        </div>
-        {{/photos}}
+    <div class="photo-grid" id="photoGrid">
+        <!-- AJAX로 사진이 여기에 로드됩니다. -->
+    </div>
+
+    <div class="navigation-buttons">
+        <button id="prevButton" disabled><</button>
+        <button id="nextButton">></button>
     </div>
 </div>
+
 <button class="move-button" id="moveButton">이동하기</button>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    let currentPage = 1;
+    const maxPageCount = parseInt('{{maxPageCount}}', 10);
+
+    function loadPhotos(page) {
+        $.ajax({
+            url: `/recommend/photos?page=${page}`,
+            method: 'GET',
+            success: function(data) {
+                const photoGrid = $('#photoGrid');
+                photoGrid.empty(); // 이전 사진들 제거
+                if (data.length === 0) {
+                    $('#prevButton').prop('disabled', page <= 1);
+                    $('#nextButton').prop('disabled', page >= maxPageCount);
+                }
+                data.forEach(photo => {
+                    photoGrid.append(`
+                        <div class="photo-item">
+                            <img src="${photo.url}" alt="사진 ${photo.id}" style="width: 100%; height: auto; border-radius: 10px;">
+                        </div>
+                    `);
+                });
+
+                // 페이지 버튼 상태 업데이트
+                $('#prevButton').prop('disabled', page <= 1);
+                $('#nextButton').prop('disabled', page >= maxPageCount);
+            },
+            error: function() {
+                alert('사진을 불러오는 데 실패했습니다.');
+            }
+        });
+    }
+
+    $('#nextButton').on('click', function() {
+        if (currentPage < maxPageCount) {
+            currentPage++;
+            loadPhotos(currentPage);
+        }
+    });
+
+    $('#prevButton').on('click', function() {
+        if (currentPage > 1) {
+            currentPage--;
+            loadPhotos(currentPage);
+        }
+    });
+
+    // 초기 페이지 로드
+    $(document).ready(function() {
+        loadPhotos(currentPage);
+    });
+</script>
 
 </body>
 </html>
